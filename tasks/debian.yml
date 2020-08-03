@@ -32,9 +32,11 @@
   become: true
   register: scsi_devices
   changed_when: false
+  check_mode: false
+
 
 - name: debian | rescanning for new disks added
   command: /sbin/rescan-scsi-bus
   become: true
   changed_when: false
-  when: scsi_devices['stdout'] | length
+  when: scsi_devices['stdout'] | length > 0
