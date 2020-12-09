@@ -1,5 +1,4 @@
 ---
-
 - name: create_lv | Display Volume Group
   debug:
     var: vg
@@ -10,8 +9,9 @@
     vg: "{{ vg.vgname }}"
     lv: "{{ lv.lvname }}"
     size: "{{ lv.size }}"
-    shrink: false
-    opts: "{{ lv.opts | default('') }}"
+    shrink: "{{ lv.shrink | d(false) }}"
+    force: "{{ lv.force | d(false) }}"
+    opts: "{{ lv.opts | d(omit) }}"
     state: present
   become: true
   register: lvchanged

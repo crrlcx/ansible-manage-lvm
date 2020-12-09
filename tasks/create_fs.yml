@@ -64,7 +64,7 @@
     fstype: "{{ lv.filesystem }}"
     dev: "/dev/{{ vg.vgname }}/{{ lv.lvname }}"
     opts: "{{ lv.fsopts | d(omit) }}"
-    force: true
+    force: "{{ lv.force | d(true) }}"
   loop: "{{ vg.lvnames }}"
   loop_control:
     loop_var: lv
@@ -86,7 +86,7 @@
     path: "{{ lv.mntp }}"
     fstype: "{{ lv.filesystem }}"
     opts: "{{ lv.mopts | default('defaults') }}"
-    passno: '0'
+    passno: "0"
     state: mounted
   become: true
   loop: "{{ vg.lvnames }}"
